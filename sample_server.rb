@@ -3,8 +3,7 @@
 require 'webrick'
 
 # Define the port number on which the server will listen.
-# You can change this to any available port, e.g., 3000, 8080.
-PORT = 4026
+PORT = ENV['PORT'] || 4026 # Use environment variable or default to 4026
 
 # Create a new WEBrick HTTP server instance.
 # The :Port option specifies the port number.
