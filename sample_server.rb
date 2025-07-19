@@ -22,8 +22,8 @@ server.mount_proc '/' do |req, res|
   res.body = '<h1>Hello, Ruby Server!</h1><p>This is a simple server built with WEBrick.</p>'
 
   # You can also inspect request details if needed:
-  # puts "Request Path: #{req.path}"
-  # puts "Request Method: #{req.request_method}"
+  puts "Request Path: #{req.path}"
+  puts "Request Method: #{req.request_method}"
 end
 
 # Register a signal trap for INT (interrupt) signal (Ctrl+C).
