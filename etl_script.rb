@@ -21,4 +21,3 @@ NEON_DB_PORT = ENV['NEON_DB_PORT', '5432']
 # --- AI Endpoint Configuration (READ FROM ENVIRONMENT VARIABLE) ---
 # Ensure this environment variable is set in your GitHub Actions secrets or local environment
 AI_ENDPOINT_BASE_URL = ENV['AI_ENDPOINT_BASE_URL']
- 
