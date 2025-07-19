@@ -26,6 +26,42 @@ server.mount_proc '/' do |req, res|
   puts "Request Method: #{req.request_method}"
 end
 
+# Register a handler for the root path ("/").
+# When a request comes in for this path, the block will be executed.
+# req: The HTTP request object, containing details about the client's request.
+# res: The HTTP response object, which you will populate with the server's response.
+server.mount_proc '/test1' do |req, res|
+  # Set the content type of the response to HTML.
+  # This tells the browser how to interpret the response body.
+  # res.content_type = 'text/html'
+  res.content_type = 'application/json'
+
+  # This function takes a name as an argument and returns a greeting string.
+  #
+  # Args:
+  #   name: A string representing the name to greet.
+  #
+  # Returns:
+  #   A string containing a personalized greeting.
+  def greet(name)
+    "Hello, #{name}! Welcome to the world of Ruby."
+  end
+
+  # Example usage of the greet function:
+  puts greet("Alice")
+  puts greet("Bob")
+
+  
+  # Set the body of the response. This is the content that will be sent back to the client.
+  res.body = greet("Alice")
+
+
+  # You can also inspect request details if needed:
+  puts "Request Path: #{req.path}"
+  puts "Request Method: #{req.request_method}"
+end
+
+
 # Register a signal trap for INT (interrupt) signal (Ctrl+C).
 # When Ctrl+C is pressed, this block will be executed, gracefully shutting down the server.
 trap 'INT' do
