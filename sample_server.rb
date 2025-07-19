@@ -1,9 +1,23 @@
 # CHQ: Gemini AI generated the template server
 # Import the WEBrick library, which is a standard Ruby library for creating web servers.
 require 'webrick'
+# Import the JSON library to handle JSON data.
+require 'json'
 
 # Define the port number on which the server will listen.
 PORT = ENV['PORT'] || 4026 # Use environment variable or default to 4026
+
+# This function takes a name as an argument and returns a greeting string.
+# It's defined at the top level so it's only defined once and accessible by all handlers.
+#
+# Args:
+#   name: A string representing the name to greet.
+#
+# Returns:
+#   A string containing a personalized greeting.
+def greet(name)
+  "Hello, #{name}! Welcome to the world of Ruby."
+end
 
 # Create a new WEBrick HTTP server instance.
 # The :Port option specifies the port number.
@@ -26,7 +40,7 @@ server.mount_proc '/' do |req, res|
   puts "Request Method: #{req.request_method}"
 end
 
-# Register a handler for the root path ("/").
+# Register a handler for the root path ("/test1").
 # When a request comes in for this path, the block will be executed.
 # req: The HTTP request object, containing details about the client's request.
 # res: The HTTP response object, which you will populate with the server's response.
@@ -36,27 +50,25 @@ server.mount_proc '/test1' do |req, res|
   # res.content_type = 'text/html'
   res.content_type = 'application/json'
 
-  # This function takes a name as an argument and returns a greeting string.
-  #
-  # Args:
-  #   name: A string representing the name to greet.
-  #
-  # Returns:
-  #   A string containing a personalized greeting.
-  def greet(name)
-    "Hello, #{name}! Welcome to the world of Ruby."
-  end
+  # Call the greet function with a name.
+  greeting_message = greet("Alice")
 
-  # Example usage of the greet function:
-  puts greet("Alice")
-  puts greet("Bob")
-
+  # Create a hash to represent the JSON response.
+  # This makes the response a valid JSON object.
+  json_response = {
+    message: greeting_message,
+    request_path: req.path,
+    request_method: req.request_method
+  }
   
-  # Set the body of the response. This is the content that will be sent back to the client.
-  res.body = greet("Alice")
+  # # Example usage of the greet function:
+  # puts greet("Alice")
+  # puts greet("Bob")
 
+  # Convert the hash to a JSON string and set it as the response body.
+  res.body = JSON.generate(json_response)
 
-  # You can also inspect request details if needed:
+  # Output request details to the server console.
   puts "Request Path: #{req.path}"
   puts "Request Method: #{req.request_method}"
 end
